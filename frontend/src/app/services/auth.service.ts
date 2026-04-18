@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, tap, catchError } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environments';
 
-Interface LoginResponse{
-  acess:string;
+interface LoginResponse {
+  access:string;
   refresh:string;
 }
 
@@ -23,13 +23,13 @@ export class AuthService {
         }
         ).pipe(
           tap((response) =>{
-            LocalStorage.setItem('access_token', response.acess);
-            LocalStorage.setItem('refresh_token', response.refresh);
+            localStorage.setItem('access_token', response.access);
+            localStorage.setItem('refresh_token', response.refresh);
           })
       );
     }
     Logout():Observable<any>{
-      const refresh = LocalStorage.getItem('refresh_token');
+      const refresh = localStorage.getItem('refresh_token');
       if (!refresh){
         this.clearTokens();
         return of(null);
