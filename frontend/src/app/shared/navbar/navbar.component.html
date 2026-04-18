@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <a routerLink="/" class="brand">ByteMarket</a>
+
+  <div class="nav-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    <a routerLink="/products" routerLinkActive="active">Products</a>
+
+    <ng-container *ngIf="authService.isLoggedIn(); else questLinks">
+      <a routerLink="/cart" routerLinkActive="active">Cart</a>
+      <a routerLink="/orders" routerLinkActive="active">Orders</a>
+      <button (click)="onLogout()">Logout</button>
+    </ng-container>
+
+    <ng-template #questLinks>
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+    </ng-template>
+  </div>
+</nav>
