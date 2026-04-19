@@ -16,7 +16,7 @@ export class AuthService {
 
     constructor(private http:HttpClient) {
     }
-    Login(username: string, password: string):Observable<LoginResponse>{
+    login(username: string, password: string):Observable<LoginResponse>{
       return this.http.post<LoginResponse>(`${this.apiUrl}/login/`,{
         username,
         password

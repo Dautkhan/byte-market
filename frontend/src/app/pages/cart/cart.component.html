@@ -1,0 +1,39 @@
+<h2>Your Cart</h2>
+
+<div *ngIf="loading">Loading cart...</div>
+<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+<p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+<div *ngIf="!loading && cart.items.length === 0" class="empty-box">
+  Your cart is empty.
+</div>
+
+<section *ngIf="cart.items.length > 0" class="cart-wrapper">
+  <div class="cart-list">
+    <article class="cart-item" *ngFor="let item of cart.items">
+      <div>
+        <h3>{{ item.product.name }}</h3>
+        <p>{{ item.product.description }}</p>
+        <p class="price">${{ item.product.price }}</p>
+      </div>
+
+      <div class="controls">
+        <button (click)="decrease(item)">-</button>
+        <span>{{ item.quantity }}</span>
+        <button (click)="increase(item)">+</button>
+      </div>
+
+      <div class="line-total">
+        ${{ item.line_total }}
+      </div>
+
+      <button class="remove-btn" (click)="remove(item.id)">Remove</button>
+    </article>
+  </div>
+
+  <aside class="summary-box">
+    <h3>Summary</h3>
+    <p>Total: <strong>${{ cart.total_price }}</strong></p>
+    <button (click)="checkout()">Place Order</button>
+  </aside>
+</section>

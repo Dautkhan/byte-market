@@ -1,0 +1,28 @@
+<h2>Your Orders</h2>
+
+<div *ngIf="loading">loading orders...</div>
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+<div *ngIf="!loading && orders.length === 0" class="empty-box">
+  No orders yet.
+</div>
+
+<section class="orders-list" *ngIf="orders.length > 0">
+  <article class="order-card" *ngFor="let order of orders">
+    <div class="order-header">
+      <div>
+        <h3>Order #{{ order.id }}</h3>
+        <p>{{ order.created_at | date:'medium' }}</p>
+      </div>
+      <strong>${{ order.total_price }}</strong>
+    </div>
+
+    <div class="order-items">
+      <div class="order-item" *ngFor="let item of order.items">
+        <span>{{ item.product.name }}</span>
+        <span>Qty: {{ item.quantity }}</span>
+        <span>${{ item.price }}</span>
+      </div>
+    </div>
+  </article>
+</section>

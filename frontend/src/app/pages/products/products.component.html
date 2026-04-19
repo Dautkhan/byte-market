@@ -1,0 +1,61 @@
+<section class="products-header">
+  <div>
+    <h2>Products</h2>
+    <p>Browse all available items in ByteMarket.</p>
+  </div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      [(ngModel)]="search"
+      placeholder="Search by product name..."
+    />
+    <button (click)="searchProducts()">Search</button>
+  </div>
+</section>
+
+<section class="categories">
+  <button
+    class="category-btn"
+    [class.active]="selectedCategoryId === null"
+    (click)="filterByCategory(null)"
+  >
+    All
+  </button>
+
+  <button
+    class="category-btn"
+    *ngFor="let category of categories"
+    [class.active]="selectedCategoryId === category.id"
+    (click)="filterByCategory(category.id)"
+  >
+    {{ category.name }}
+  </button>
+</section>
+
+<p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+<div *ngIf="loading" class="info-text">Loading products...</div>
+
+<section class="products-grid" *ngIf="!loading">
+  <article class="product-card" *ngFor="let product of products">
+    <div class="image-box">
+      <img
+        *ngIf="product.image_url; else noImage"
+        [src]="product.image_url"
+        [alt]="product.name"
+      />
+      <ng-template #noImage>
+        <div class="placeholder">No Image</div>
+      </ng-template>
+    </div>
+
+    <h3>{{ product.name }}</h3>
+    <p class="category">{{ product.category_name }}</p>
+    <p class="description">{{ product.description }}</p>
+    <p class="price">${{ product.price }}</p>
+
+    <button (click)="addToCart(product.id)">Add to Cart</button>
+  </article>
+</section>

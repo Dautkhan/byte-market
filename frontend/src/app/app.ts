@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 
@@ -7,6 +7,6 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
   imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
-  standalone: true,
+  standalone: true
 })
-export class AppComponent {}
+export class App {}
