@@ -12,10 +12,10 @@ export interface Category {
   providedIn:'root'
 })
 export class CategoryService{
-  private readonly apiUrl = `${environment.apiUrl}/categories`;
+  private readonly apiUrl = `${environment.apiUrl}/categories/`;
 
-  constructor(private http:HttpClient) {
-  }
+  constructor(private http:HttpClient) {}
+
   getCategories(): Observable<Category[]>{
     return this.http.get<Category[]>(this.apiUrl);
   }

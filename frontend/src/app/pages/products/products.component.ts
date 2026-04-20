@@ -30,7 +30,8 @@ export class ProductsComponent implements OnInit{
     private authService: AuthService,
     private router: Router
   ) {}
-   ngOnInit(): void {
+
+  ngOnInit(): void {
     this.loadCategories();
     this.loadProducts();
   }
@@ -39,10 +40,14 @@ export class ProductsComponent implements OnInit{
     this.categoryService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load categories.';
       }
     });
   }
-loadProducts(): void {
+
+  loadProducts(): void {
     this.loading = true;
     this.errorMessage = '';
     this.successMessage = '';
