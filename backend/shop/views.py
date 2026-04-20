@@ -29,3 +29,26 @@ class ProductDetailAPIView(APIView):
         product = Product.objects.get(pk=pk)
         serializer = ProductSerializer(product)
         return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_product(request):
+    serializer = ProductSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response (serializer.errors)
+
+@api_view(['PUT'])
+def update_product(request,pk):
+    serializer = ProductSerializer(produt, data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)
+
+@api_view(['DELETE'])
+def delete_product(request,pk):
+    product = Product.objects.get(pk=pk)
+    product.delete()
+    return Response({"message": "Deleted"})
