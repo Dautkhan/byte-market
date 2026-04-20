@@ -3,11 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
 
-export interface Category{
-  id:number;
-  name: string;
-}
-
 export interface Product{
   id:number;
   name:string;
@@ -24,22 +19,20 @@ export interface Product{
 export class ProductService{
   private readonly apiUrl = `${environment.apiUrl}`;
 
-  constructor(private http:HttpClient) {
-  }
-  getCategories(): Observable<Category[]>{
-    return this.http.get<Category[]>(`${this.apiUrl}/categories/`);
-  }
+  constructor(private http:HttpClient) {}
+
   getProducts(search: string = '', categoryId?:number): Observable<Product[]>{
     let params = new HttpParams();
-    if(search.trim()){
-      params = params.set('search', search.trim());
+    const trimmedSearch = search.trim();
+
+    if (trimmedSearch) {
+      params = params.set('search', trimmedSearch);
     }
-    if (search.trim()){
-      params = params.set('search', search.trim());
-    }
+
     if (categoryId) {
-      params = params.set('search', categoryId);
+      params = params.set('category', String(categoryId));
     }
+
     return this.http.get<Product[]>(`${this.apiUrl}/products/`, { params });
   }
 }
