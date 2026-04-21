@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import UserCartAPIView
 from .views import create_product,update_product,delete_product
 from .views import(
     category_list,
@@ -15,4 +16,5 @@ urlpatterns = [
     path('products/create/',create_product),
     path('products/update/<int:pk>/',update_product),
     path('products/delete/<int:pk>/',delete_product),
+    path('cart/', UserCartAPIView.as_view(), name='user-cart'),
 ]
