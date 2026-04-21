@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from .models import Order
+from .serializers import  OrderSerializer, OrderCreateSerializer
 
 from .models import Category, Product, CartItem
 from .serializers import (
@@ -84,3 +86,16 @@ class UserCartAPIView(APIView):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserOrderAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        orders = Order.objects.filter(user = request.user)
+        serializer = OrderSerializer(orders, many = True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        order = Order.objects.create(user = request.user)
+        serializer = OrderSerializer(order)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
