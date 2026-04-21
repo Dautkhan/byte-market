@@ -31,10 +31,11 @@ export class LoginComponent{
         this.loading = false;
         this.router.navigate(['/products']);
       },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = 'Invalid username or password.';
-      }
+      error: (err) => {
+          this.loading = false;
+          console.error('LOGIN ERROR:', err);
+          this.errorMessage = 'Login failed. Check console/network.';
+        }
     });
   }
 }

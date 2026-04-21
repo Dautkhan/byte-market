@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, tap, catchError } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environments';
 
 interface LoginResponse {
@@ -12,7 +12,7 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly apiUrl = `${environment.apiUrl}/auth`;
+  private readonly apiUrl = `${environment.apiUrl}`;
   private readonly hasLocalStorage =
     typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 
@@ -20,7 +20,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/login/`, {
+      .post<LoginResponse>(`${this.apiUrl}/token/`, {
         username,
         password,
       })
@@ -35,19 +35,8 @@ export class AuthService {
   }
 
   logout(): Observable<unknown> {
-    const refresh = this.hasLocalStorage ? localStorage.getItem('refresh_token') : null;
-    if (!refresh) {
-      this.clearTokens();
-      return of(null);
-    }
-
-    return this.http.post(`${this.apiUrl}/logout/`, { refresh }).pipe(
-      tap(() => this.clearTokens()),
-      catchError(() => {
-        this.clearTokens();
-        return of(null);
-      })
-    );
+    this.clearTokens();
+    return of(null);
   }
 
   isLoggedIn(): boolean {
