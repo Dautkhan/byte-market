@@ -30,7 +30,7 @@ export class OrdersComponent implements OnInit{
       },
       error: () => {
         this.loading = false;
-        this.errorMessage = 'Failed to load orders'
+        this.errorMessage = 'Failed to load orders.';
       }
     });
   }
