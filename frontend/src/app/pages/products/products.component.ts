@@ -66,9 +66,10 @@ export class ProductsComponent implements OnInit{
       });
   }
 
-  searchProducts(): void {
-    this.loadProducts();
-  }
+ searchProducts(): void {
+  this.selectedCategoryId = null;
+  this.loadProducts();
+}
 
   filterByCategory(categoryId: number | null): void {
     this.selectedCategoryId = categoryId;

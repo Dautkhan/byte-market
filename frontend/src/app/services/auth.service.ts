@@ -12,7 +12,7 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly apiUrl = `${environment.apiUrl}`;
+  private readonly apiUrl = environment.apiUrl;
   private readonly hasLocalStorage =
     typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 
